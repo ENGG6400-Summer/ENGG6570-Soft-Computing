@@ -1,0 +1,85 @@
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\chapter{Lecture-3 May, 25, 2021}
+
+\section{Review from the Last Lecture}
+We have learned Perceptron and it's learning strategy:
+\begin{itemize}
+    \item Activation function \textbf{MUST} be Hard-Limiter [0,1]; \textcolor{red}{WHY???}
+    \item Learningis: $\mathbb{W}_{}^{new} = {\mathbb{W}^{old}} + (\mathbb{t} - \mathbb{y}){\mathbb{X}^{*T}} = {\mathbb{W}^{old}} + {\mathbb{e}_{}}\mathbb{X}_{}^{*T}$, for both weights and threshold;
+\end{itemize}
+\noindent{\color{red} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+\section{Adaline and Madaline}
+Today, we are going to look at Adaline and Madaline:
+\begin{itemize}
+    \item \textbf{Adaline} stands for \textbf{Ada}ptive \textbf{Line}ar Neuron Network;\textcolor{red}{What the word linear means here as the activation function can be non-linear???}
+    \item \textbf{Madaline} stands for \textbf{M}any \textbf{Adaline} in Parallel; Mainly used for communication, DSP, Control, and Robotics.
+\end{itemize}
+These concepts were introduced by Barnard Widraw and Marcian Hoff in the 60s, together with LMS (least mean square) training algorithms. 
+
+\noindent{\color{red} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+\section{Single Neuron Adaline Model}
+
+For a \textcolor{red}{fully connected} single neuron Adaline neural network, which has \textcolor{red}{one neurons (one outputs) and N inputs},
+for the 1st neuron, we have:
+\[{y} = f(\sum\limits_{i = 1}^N {{w_{i}}} {x_i} - {\theta})\]
+If we choose $ - {\theta _j} = {x_0} {w_{j0}}$:  i.e. $x_0 \equiv 1$, and then, $w_{j0}\equiv-\theta_0$
+Then, the argument-ed y becomes:
+\[{y} = f(\sum\limits_{i = 0}^N {{w_{i}}} {x_i})\]
+Where i could be any number between 0 to N:
+\begin{itemize}
+    \item $w_i$ is the weight from the ith input to the neuron,
+    \item $i = 0$ is the term for the threshold, where $w_0 = - \theta$
+\end{itemize}
+All these $w_i$ are randomly initialized to $[-1,+1]$.
+
+
+\begin{center}
+\begin{tikzpicture}
+\Vertex[x=0, RGB,color={190,174,212},label=\(x_0\)]{A} 
+% Vertexs
+\Vertex[x=2,label=$x_1$]{B}
+\Vertex[x=4,label=$...$]{C}
+\Vertex[x=6,label=$x_i$]{D}
+\Vertex[x=8,label=$...$]{D1}
+\Vertex[x=10,label=$x_N$]{G}
+
+
+\Vertex[x=5,y=-2,label=Neuron,size = 1]{E}
+\Vertex[x=5,y=-4, label=y]{F}
+
+% Edges
+\Edge[bend=-10,Direct=true,color=red,label=\[w_{0=-\theta}\]](A)(E)
+\Edge[bend=-5,Direct=true,label=w1](B)(E)
+\Edge[bend=-3,Direct=true,label=...](C)(E)
+\Edge[bend=5,Direct=true,label=wi](D)(E)
+\Edge[bend=5,Direct=true,label=...](D1)(E)
+\Edge[bend=5,Direct=true,label=$w_N$](G)(E)
+\Edge[bend=0,Direct=true](E)(F)
+\end{tikzpicture}
+\end{center}
+\\
+Activation function $f(a)$ can be either \textbf{linear} or \textbf{non-linear}. The popular choices are:
+\begin{itemize}
+    \item $f(a)=a$ for linear activation function
+    \item $f(a)=Sigmoid(a)$ for non-linear activation function
+\end{itemize}
+\noindent{\color{red} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+\section{Least Mean Square (LMS) Learning rules}
+\subsection{LMS for Adaline}
+ 
+\begin{definition}[LMSE, LMS error]
+For a single neuron Adaline model with one actual output, $y$, and target output, $t$ (also called reference input or desired output), the Least Mean Square Error, $e$, is:
+\[error = e = t-y\]
+\[E = \frac{1}{2}e^2 =\frac{1}{2} (t-y)^2 \text{    (this is the squared error)}\]
+\end{definition}
+The learning rule is simply that:
+\[\begin{array}{*{20}{c}}
+{\Delta {w_i}}& = &{w_i^{new} - w_i^{old}}& = &{w_i^{k + 1} - w_i^k}\\
+{\Delta {w_i}}& = &{ - \eta \frac{{\partial E}}{{\partial {w_i}}}}&{where}&{i \in \left[ {0,N} \right]}
+\end{array}\]
+\textcolor{red}{Where the partial derivative is the gradient of the squared error, the negative sign before $\eta$ means the learning is in the direction of the reduction of squared error in the steepest path.}
