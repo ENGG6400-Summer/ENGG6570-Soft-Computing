@@ -83,3 +83,67 @@ The learning rule is simply that:
 {\Delta {w_i}}& = &{ - \eta \frac{{\partial E}}{{\partial {w_i}}}}&{where}&{i \in \left[ {0,N} \right]}
 \end{array}\]
 \textcolor{red}{Where the partial derivative is the gradient of the squared error, the negative sign before $\eta$ means the learning is in the direction of the reduction of squared error in the steepest path.}
+
+\noindent{\color{red} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+
+\section{An interesting derivatives}
+It is interesting to proof that for Fermi-Dirac distribution function:
+\[y_{F.D} = \frac{1}{{1 + {e^{ - x}}}}\]
+The derivative of this function has an very interesting look: 
+\[y' = y\left( {1 - y} \right)\]
+
+\noindent{\color{black} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+\textbf{PROOF:}
+\pushQED{\qed} 
+\\
+Rewrite $y$ as: 
+\[y = \frac{1}{{1 + {e^{ - x}}}} = {\left( {1 + {e^{ - x}}} \right)^{ - 1}}\]
+Also, note that:
+\[y = \frac{1}{{1 + {e^{ - x}}}} \Rightarrow {e^{ - x}} = \frac{1}{y} - 1\]
+Then, it is easy to proof that:
+\[\begin{array}{*{20}{c}}
+{y'}& = &{ - {{\left( {1 + {e^{ - x}}} \right)}^{ - 2}}\frac{{d\left( {1 + {e^{ - x}}} \right)}}{{dx}}}\\
+{}& = &{{{\left( {1 + {e^{ - x}}} \right)}^{ - 2}}\frac{{d\left( {1 + {e^{ - x}}} \right)}}{{d\left( { - x} \right)}}}\\
+{}& = &{{{\left( {1 + {e^{ - x}}} \right)}^{ - 2}}{e^{ - x}}}\\
+{}& = &{{y^2}\left( {\frac{1}{y} - 1} \right)}\\
+{}& = &{y\left( {1 - y} \right)}
+\end{array}\]\qedhere
+
+\noindent{\color{black} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+For enrichment, let's calculate the derivative for Bose-Einstein distribution function as well:
+\[y_{B.E} = \frac{1}{{{e^x} + 1}}\]\pushQED{\qed} 
+\textbf{PROOF:}
+
+\[\begin{array}{*{20}{c}}
+{y'}& = &{ - {{\left( {1 + {e^x}} \right)}^{ - 2}}\frac{{d\left( {1 + {e^x}} \right)}}{{dx}}}\\
+{}& = &{ - {{\left( {1 + {e^x}} \right)}^{ - 2}}\frac{{d\left( {{e^x}} \right)}}{{d\left( x \right)}}}\\
+{}& = &{ - {{\left( {1 + {e^x}} \right)}^{ - 2}}{e^x}}\\
+{}& = &{ - {y^2}\left( {\frac{1}{y} - 1} \right)}\\
+{}& = &{y\left( {y - 1} \right)}
+\end{array}\]\qedhere
+
+
+\noindent{\color{black} \rule{\linewidth}{0.5mm}}
+% ====================================================================================
+For homework, let's calculate the derivative for Sigmoid function:
+\[y = \frac{{{e^x} - {e^{ - x}}}}{{{e^x} + {e^{ - x}}}}\]
+\textbf{PROOF:}\\
+Rewrite Sigmoid function as:
+\[y\left( x \right) = \frac{{{e^x} - {e^{ - x}}}}{{{e^x} + {e^{ - x}}}} = \frac{{{e^x}}}{{{e^x} + {e^{ - x}}}} - \frac{{{e^{ - x}}}}{{{e^x} + {e^{ - x}}}} = \frac{1}{{1 + {e^{ - 2x}}}} - \frac{1}{{1 + {e^{2x}}}} = f\left( x \right) - g\left( x \right)\]
+Where:
+\[f\left( x \right) = \frac{1}{{1 + {e^{ - 2x}}}}\]
+and
+\[g\left( x \right) = \frac{1}{{1 + {e^{2x}}}}\]
+Also note that:
+\[f\left( x \right) + g\left( x \right) = \frac{1}{{1 + {e^{ - 2x}}}} + \frac{1}{{1 + {e^{2x}}}} = \frac{{1 + {e^{ - 2x}} + 1 + {e^{2x}}}}{{1 + {e^{ - 2x}} + 1 + {e^{2x}}}} \equiv 1 \Rightarrow g\left( x \right) = 1 - f\left( x \right)\]
+Therefore,
+\[\frac{{\partial y\left( x \right)}}{{\partial x}} = \frac{{\partial \left( {f\left( x \right) - g\left( x \right)} \right)}}{{\partial x}} = \frac{{\partial f\left( x \right)}}{{\partial x}} - \frac{{\partial g\left( x \right)}}{{\partial x}}\]
+From the derivative of Fermi-Dirac distribution function, we have:
+\[\frac{{\partial f\left( x \right)}}{{\partial x}} = 2\frac{{\partial f\left( x \right)}}{{\partial \left( {2x} \right)}} = 2\frac{{\partial \left( {\frac{1}{{1 + {e^{ - 2x}}}}} \right)}}{{\partial \left( {2x} \right)}} = 2f\left( {1 - f} \right)\]
+From the derivative of  Bose-Einstein distribution function, we have
+\[\frac{{\partial g\left( x \right)}}{{\partial x}} = 2\frac{{\partial g\left( x \right)}}{{\partial \left( {2x} \right)}} = 2\frac{{\partial \left( {\frac{1}{{1 + {e^{2x}}}}} \right)}}{{\partial \left( {2x} \right)}} = 2g\left( {g - 1} \right)\]
+Eventually:
+\[\frac{{\partial y\left( x \right)}}{{\partial x}} = 2f\left( {1 - f} \right) - 2g\left( {g - 1} \right) = 2fg - 2g\left( { - f} \right) = 4fg\]
